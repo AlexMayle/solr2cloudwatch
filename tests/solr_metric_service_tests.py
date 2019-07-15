@@ -2,7 +2,7 @@ import requests
 
 from solr_metric_service.solr_metric_service import SolrMetricService
 from metric_processors.metric_processors import MetricProcessor
-from exporters.cloudwatch_agent import CloudWatchAGentExporter
+from exporters.cloudwatch_agent import CloudWatchAgentExporter
 
 SOLR_ADMIN_ENDPOINT = "http://3.218.252.109:8983/solr"
 BASE_SOLR_ENDPOINT = "http://3.218.252.109:8983"
@@ -34,6 +34,6 @@ def run_tests():
     mp = MetricProcessor()
     metrics = successful_shard_and_rep_agg(mp, metrics)
 
-    cwx = CloudWatchExporter()
+    cwx = CloudWatchAgentExporter()
     successful_send_metric_to_cw(cwx, metrics, "gauge")
     

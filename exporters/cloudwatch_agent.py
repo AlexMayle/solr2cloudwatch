@@ -7,9 +7,9 @@ class CloudWatchAgentExporter:
                  host="localhost",
                  port=8125):
         
-        self._client = StatsClient(host=host,
-                                   port=port,
-                                   prefix=prefix)
+        self._client = statsd.StatsClient(host=host,
+                                          port=port,
+                                          prefix=prefix)
 
     def publish(self, data_dict, data_type):
         return self._publish_rec_helper(data_dict, [], data_type)
@@ -17,7 +17,7 @@ class CloudWatchAgentExporter:
     def _resolve_metric_name(self, dimensions):
         return '.'.join(dimensions)
 
-    def _send_to_cw_agent(self, data, dimension, data_type):
+    def _send_to_cw_agent(self, data, dimensions, data_type):
         name = self._resolve_metric_name(dimensions)
         self._client.gauge(name, data)
         
@@ -32,6 +32,7 @@ class CloudWatchAgentExporter:
             self._send_to_cw_agent(data,
                                    dimensions,
                                    data_type)
+            return
 
         for key in working_dim:
             self._publish_rec_helper(working_dim[key],
