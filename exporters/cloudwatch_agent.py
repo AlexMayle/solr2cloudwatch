@@ -19,6 +19,7 @@ class CloudWatchAgentExporter:
 
     def _send_to_cw_agent(self, data, dimensions, data_type):
         name = self._resolve_metric_name(dimensions)
+        print((name, data))
         self._client.gauge(name, data)
         
 

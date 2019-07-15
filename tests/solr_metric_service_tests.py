@@ -25,10 +25,11 @@ def successful_send_metric_to_cw(cwx, data, data_type):
     cwx.publish(data, data_type)
 
 
-def run_tests():
-    solr_is_running(SOLR_ADMIN_ENDPOINT)
+def run_tests(base_host):
+    solr_admin_endpoint = base_host + "/solr"
+    solr_is_running(solr_admin_endpoint)
 
-    sms = SolrMetricService(BASE_SOLR_ENDPOINT)
+    sms = SolrMetricService(base_host)
     metrics = successful_response_from_metric_api(sms)
 
     mp = MetricProcessor()
