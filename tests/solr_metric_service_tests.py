@@ -4,8 +4,8 @@ from solr_metric_service.solr_metric_service import SolrMetricService
 from metric_processors.metric_processors import MetricProcessor
 from exporters.cloudwatch_agent import CloudWatchAgentExporter
 
-SOLR_ADMIN_ENDPOINT = "http://3.218.252.109:8983/solr"
-BASE_SOLR_ENDPOINT = "http://3.218.252.109:8983"
+SOLR_ADMIN_ENDPOINT = "http://localhost:8983/solr"
+BASE_SOLR_ENDPOINT = "http://localhost:8983"
 
 def solr_is_running(endpoint):
     resp = requests.get(endpoint)
