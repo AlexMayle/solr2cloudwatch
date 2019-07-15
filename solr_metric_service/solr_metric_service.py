@@ -10,6 +10,10 @@ class SolrMetricService:
     def __init__(self, base_endpoint):
         self._endpoint = self._construct_metric_endpoint(base_endpoint)
 
+    def get_memory_metrics(self):
+        return self._make_metric_api_call(group="jvm",
+                                          regex="memory\.heap\.usage")
+
     def get_query_latency_metrics(self):
         return self._make_metric_api_call(group="core",
                                           regex="QUERY\./select.*Times")

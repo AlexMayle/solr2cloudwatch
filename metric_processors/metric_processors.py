@@ -5,24 +5,9 @@ class MetricProcessor:
     def __init__(self):
         pass
 
-    def _aggregate(self, aggregates, new_value, dimensions):
-        working_dimension = aggregates
-        for i in range(len(dimensions) - 1):
-            try:
-                maybe_exists = working_dimension[dimensions[i]]
-            except KeyError:
-                # turns out it doesn't exist
-                working_dimension[dimensions[i]] = dict()
-            finally:
-                # move up one dimension
-                working_dimension = \
-                        working_dimension[dimensions[i]]
-
-        # We have to stop one before the last dimension because
-        # numbers are copied by value and we'll lose our reference
-        # to the memory slot
-        prev_value = working_dimension.get(dimensions[-1], 0) 
-        working_dimension[dimensions[-1]] = prev_value + new_value
+    def process_memory_metrics(self, metric_dict):
+        # We don't need to do anything
+        return metric_dict
 
     def process_latency_metrics(self, metric_dict):
         aggregates = dict()
@@ -49,4 +34,23 @@ class MetricProcessor:
 
         return aggregates 
                 
+    def _aggregate(self, aggregates, new_value, dimensions):
+        working_dimension = aggregates
+        for i in range(len(dimensions) - 1):
+            try:
+                maybe_exists = working_dimension[dimensions[i]]
+            except KeyError:
+                # turns out it doesn't exist
+                working_dimension[dimensions[i]] = dict()
+            finally:
+                # move up one dimension
+                working_dimension = \
+                        working_dimension[dimensions[i]]
+
+        # We have to stop one before the last dimension because
+        # numbers are copied by value and we'll lose our reference
+        # to the memory slot
+        prev_value = working_dimension.get(dimensions[-1], 0) 
+        working_dimension[dimensions[-1]] = prev_value + new_value
+
 
